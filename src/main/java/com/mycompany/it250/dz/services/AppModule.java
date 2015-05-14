@@ -1,5 +1,7 @@
 package com.mycompany.it250.dz.services;
 
+import com.mycompany.it250.dz.dao.KorisnikDao;
+import com.mycompany.it250.dz.dao.KorisnikDaoImpl;
 import java.io.IOException;
 
 import org.apache.tapestry5.*;
@@ -24,7 +26,8 @@ public class AppModule
 {
     public static void bind(ServiceBinder binder)
     {
-        // binder.bind(MyServiceInterface.class, MyServiceImpl.class);
+        binder.bind(KorisnikDao.class, KorisnikDaoImpl.class);
+
 
         // Make bind() calls on the binder object to define most IoC services.
         // Use service builder methods (example below) when the implementation
