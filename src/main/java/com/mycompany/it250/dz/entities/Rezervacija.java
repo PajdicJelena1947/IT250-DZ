@@ -32,15 +32,12 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 @Table(name = "rezervacije")
 @NamedQueries({
     @NamedQuery(name = "Rezervacije.findAll", query = "SELECT r FROM Rezervacije r")})
-public class Rezervacija implements Serializable {
+public class Rezervacija  extends AbstractEntity  implements Serializable {
     
     
     
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "RezId")
-    private Integer rezId;
+    
     @Basic(optional = false)
     @Column(name = "ime")
     private String ime;
@@ -66,19 +63,7 @@ public class Rezervacija implements Serializable {
         
     }
 
-    /**
-     * @return the rezId
-     */
-    public Integer getRezId() {
-        return rezId;
-    }
-
-    /**
-     * @param rezId the rezId to set
-     */
-    public void setRezId(Integer rezId) {
-        this.rezId = rezId;
-    }
+   
 
     /**
      * @return the ime

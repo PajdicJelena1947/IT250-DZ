@@ -28,13 +28,10 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 @NamedQueries({
  @NamedQuery(name = "Korisnik.findAll", query = "SELECT k FROM Korisnik k")})
 
-public class Korisnik implements Serializable {
+public class Korisnik extends AbstractEntity  implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
     @Basic(optional = false)
-    @Column(name = "KorisnikID")
-    private Integer korisnikId;
     @Column(name = "IME")
     private String ime;
     @Column(name = "PREZIME")
@@ -62,25 +59,11 @@ public class Korisnik implements Serializable {
     public Korisnik(Integer korisnikId,String ime,String prezime,String jmbg){
       this.ime=ime;
       this.prezime=prezime;
-      this.korisnikId=korisnikId;
       this.jmbg=jmbg;
         
     }
 
-    /**
-     * @return the korisnikId
-     */
-    public Integer getKorisnikId() {
-        return korisnikId;
-    }
-
-    /**
-     * @param korisnikId the korisnikId to set
-     */
-    public void setKorisnikId(Integer korisnikId) {
-        this.korisnikId = korisnikId;
-    }
-
+   
     /**
      * @return the ime
      */

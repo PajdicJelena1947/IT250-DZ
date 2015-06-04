@@ -1,5 +1,7 @@
 package com.mycompany.it250.dz.services;
 
+import com.mycompany.it250.dz.dao.GenericDao;
+import com.mycompany.it250.dz.dao.GenericDaoImpl;
 import com.mycompany.it250.dz.dao.KorisnikDao;
 import com.mycompany.it250.dz.dao.KorisnikDaoImpl;
 import java.io.IOException;
@@ -27,7 +29,7 @@ public class AppModule
     public static void bind(ServiceBinder binder)
     {
         binder.bind(KorisnikDao.class, KorisnikDaoImpl.class);
-
+binder.bind(GenericDao.class,GenericDaoImpl.class);
 
         // Make bind() calls on the binder object to define most IoC services.
         // Use service builder methods (example below) when the implementation

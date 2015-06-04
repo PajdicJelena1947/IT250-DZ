@@ -31,12 +31,9 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 @Table(name = "sobe")
 @NamedQueries({
 @NamedQuery(name = "Sobe.findAll", query = "SELECT s FROM Sobe s")})
-public class Sobe implements Serializable {
+public class Sobe extends AbstractEntity  implements Serializable {
      private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "SobaID")
-    private Integer sobaId;
+    
     @Column(name = "IME")
     private String ime;
     @Column(name = "Sprat")
@@ -56,19 +53,7 @@ public class Sobe implements Serializable {
          
      }
 
-    /**
-     * @return the sobaId
-     */
-    public Integer getSobaId() {
-        return sobaId;
-    }
 
-    /**
-     * @param sobaId the sobaId to set
-     */
-    public void setSobaId(Integer sobaId) {
-        this.sobaId = sobaId;
-    }
 
     /**
      * @return the ime
