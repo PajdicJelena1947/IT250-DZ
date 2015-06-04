@@ -5,10 +5,13 @@
  */
 package com.mycompany.it250.dz.entities;
 
+import com.mycompany.it250.dz.data.Rola;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -38,6 +41,19 @@ public class Korisnik implements Serializable {
     private String prezime;
     @Column(name = "JMBG")
     private String jmbg;
+    @Basic(optional = false)
+    @Column(name = "username")
+    private String username;
+    @Basic(optional = false)
+    @Column(name = "password")
+    private String password;
+    @Column(name = "Email")
+    private String email;
+    
+    @Basic(optional = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "rola")
+    private Rola rola;
     
     
     @Inject
@@ -105,6 +121,62 @@ public class Korisnik implements Serializable {
      */
     public void setJmbg(String jmbg) {
         this.jmbg = jmbg;
+    }
+
+    /**
+     * @return the username
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * @param username the username to set
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
+     * @return the rola
+     */
+    public Rola getRola() {
+        return rola;
+    }
+
+    /**
+     * @param rola the rola to set
+     */
+    public void setRola(Rola rola) {
+        this.rola = rola;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
     }
     
     

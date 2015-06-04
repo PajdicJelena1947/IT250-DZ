@@ -48,6 +48,11 @@ public class AppModule
         configuration.override(SymbolConstants.APPLICATION_VERSION, "1.0-SNAPSHOT");
 		configuration.override(SymbolConstants.PRODUCTION_MODE, false);
     }
+    public void contributeComponentRequestHandler(OrderedConfiguration<ComponentRequestFilter>
+configuration) {
+ configuration.addInstance("PageProtectionFilter", PageProtectionFilter.class);
+}
+
 
     public static void contributeApplicationDefaults(
             MappedConfiguration<String, Object> configuration)

@@ -5,32 +5,51 @@
  */
 package com.mycompany.it250.dz.pages;
 
-import com.mycompany.it250.dz.data.Korisnik;
+import com.mycompany.it250.dz.dao.KorisnikDao;
+import com.mycompany.it250.dz.entities.Korisnik;
+import com.mycompany.it250.dz.services.ProtectedPage;
 import java.util.ArrayList;
-import org.apache.tapestry5.annotations.Persist;
+import javax.annotation.security.RolesAllowed;
+
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.ioc.annotations.Inject;
 
 /**
  *
  * @author pc
  */
+@ProtectedPage
+@RolesAllowed(value={"Administrator"})
 public class DodajKorisnika {
-
-    @Persist
-    @Property
-    private ArrayList<Korisnik> korisnici;
+    
     @Property
     private Korisnik korisnik;
-
-    void onActivate() {
-        if (korisnici == null) {
-            korisnici = new ArrayList<Korisnik>();
-        }
-    }
-
-    Object onSuccess() {
-        korisnici.add(korisnik);
+    @Property
+    private Korisnik onekorisnik;
+    @Property
+    private ArrayList<Korisnik> korisnici;
+    @Inject
+    private KorisnikDao korisnikDao;
+    
+ void onActivate() {
+ if (korisnici == null) {
+ korisnici = new ArrayList<Korisnik>();
+ }
+ korisnici = korisnikDao.getListaSvihKorisnika();
+ }
+ 
+  Object onSuccess() {
+        korisnikDao.dodajKorisnika(korisnik);
         return this;
     }
+
+Object onActionFromDelete(Integer korisnikId)
+ {
+korisnikDao.obrisiKorisnika(korisnikId);
+    
+    return this;
+    
+    
+}
 
 }

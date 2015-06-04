@@ -6,7 +6,9 @@
 package com.mycompany.it250.dz.pages;
 
 import com.mycompany.it250.dz.data.Hotel;
+import com.mycompany.it250.dz.services.ProtectedPage;
 import java.util.ArrayList;
+import javax.annotation.security.RolesAllowed;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 
@@ -14,6 +16,9 @@ import org.apache.tapestry5.annotations.Property;
  *
  * @author pc
  */
+
+@ProtectedPage
+@RolesAllowed(value={"Administrator"})
 public class DodajHotel {
     
     @Persist

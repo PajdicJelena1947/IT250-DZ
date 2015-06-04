@@ -21,4 +21,11 @@ public interface KorisnikDao {
     public void dodajKorisnika(Korisnik korisnik);
 
     public void obrisiKorisnika(Integer korisnikId);
+    
+    public Korisnik check(String username,String password);
+    
+    public Korisnik register(Korisnik korisnik);
+    
+    public boolean proveriemail (String email);
+    
 }

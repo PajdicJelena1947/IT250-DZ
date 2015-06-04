@@ -1,0 +1,21 @@
+<html t:type="layout" title="Dodaj Korisnika"
+ t:sidebarTitle="Framework Version"
+ xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+ xmlns:p="tapestry:parameter">
+ <t:beaneditform object="rezervacija" exclude="rezId" add="sobaId">
+ </t:beaneditform>
+ <p:sobaId>
+        <t:label for="sobaId"/>:
+        <t:select 
+          t:blankLabel="Sobe" 
+          t:id="sobaId" 
+          model="sobeLista" 
+          />
+      </p:sobaId>
+      </t:beaneditform>
+ <t:grid t:source="rezervacijeLista" add="delete" row="rezervacijaone">
+        <p:deleteCell>
+            <t:actionlink t:id="delete" context="rezervacijaone.rezId">Delete</t:actionlink>
+        </p:deleteCell>
+      </t:grid>
+</html>
