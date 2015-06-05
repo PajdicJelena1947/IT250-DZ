@@ -10,6 +10,7 @@ import com.mycompany.it250.dz.entities.Korisnik;
 import com.mycompany.it250.dz.services.ProtectedPage;
 import java.util.ArrayList;
 import javax.annotation.security.RolesAllowed;
+import org.apache.tapestry5.annotations.PageLoaded;
 
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -32,6 +33,9 @@ public class DodajKorisnika {
     private KorisnikDao korisnikDao;
     
  void onActivate() {
+ }
+ @PageLoaded
+ void localKesh(){
  if (korisnici == null) {
  korisnici = new ArrayList<Korisnik>();
  }
