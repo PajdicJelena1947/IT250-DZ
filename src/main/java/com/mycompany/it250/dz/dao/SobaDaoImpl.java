@@ -6,9 +6,15 @@
 package com.mycompany.it250.dz.dao;
 
 import com.mycompany.it250.dz.entities.Sobe;
+import static java.lang.ProcessBuilder.Redirect.from;
 import java.util.ArrayList;
+import java.util.List;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import static org.apache.tapestry5.json.JSONArray.from;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -40,5 +46,30 @@ public class SobaDaoImpl implements SobaDao {
         Sobe sob = (Sobe) session.createCriteria(Sobe.class).add(Restrictions.eq("id", sobaId)).uniqueResult();
         session.delete(sob);
     }
+    @Override
+    public List<Sobe> getListaSobaPoImenu(String ime) {
+        return session.createCriteria(Sobe.class).add(Restrictions.ilike("ime", ime + "%")).list();
+    }
+
+    @Override
+    public int allActiveSizeSobe() {
+        Long l = (Long)
+session.createCriteria(Sobe.class).setProjection(Projections.rowCount()).uniqueResult();
+ return l.intValue();
+    }
+
+    @Override
+    public List<Sobe> loadActiveFromTo(int from) {
+     int page = (from - 1) * 20;
+ List<Sobe> lista =
+session.createCriteria(Sobe.class).setFirstResult(page).setMaxResults(20).addOrder(Order.asc("id")).setResultTransformer(
+ Criteria.DISTINCT_ROOT_ENTITY).list();
+ return lista;
+ }    
+    }
+
+
+
     
-}
+    
+

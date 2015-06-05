@@ -7,6 +7,7 @@ package com.mycompany.it250.dz.dao;
 
 import com.mycompany.it250.dz.entities.Sobe;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -21,4 +22,11 @@ public interface SobaDao {
     public void dodajSobu(Sobe soba);
 
     public void obrisiSobu(int sobaId);
+    
+    public List<Sobe> getListaSobaPoImenu(String ime);
+    
+   public abstract int allActiveSizeSobe();
+   
+ public abstract List<Sobe> loadActiveFromTo(int from);
+    
 }
