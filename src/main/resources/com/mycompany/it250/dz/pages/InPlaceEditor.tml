@@ -1,0 +1,11 @@
+<html t:type="layout" title="TapestryHibernateDemo Index"
+ t:sidebarTitle="Framework Version"
+ xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+ xmlns:p="tapestry:parameter">
+ <t:grid source="kor" row="korisnik" exclude="id" t:inplace="true">
+ <p:imeKorisnikaCell>
+ <div t:id="imeKorisnika" value="korisnik.imeKorisnika" t:type="jquery/inPlaceEditor"
+t:context="korisnik.id"/>
+</p:imeKorisnikaCell>
+ </t:grid>
+</html>

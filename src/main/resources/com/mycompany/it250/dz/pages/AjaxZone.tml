@@ -1,0 +1,21 @@
+<html t:type="layout" title="Ajax Zone"
+ t:sidebarTitle="Framework Version"
+ xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+ xmlns:p="tapestry:parameter">
+ <t:zone t:id="formZone">
+ <t:beaneditform object="korisnik" t:zone="zoneKorisnik" exclude="id" >
+ </t:beaneditform>
+ </t:zone>
+
+ <t:zone t:id="zoneKorisnik">
+ <t:grid source="kor" t:inplace="true" exclude="id" add="delete" t:options="options"
+row="onekorisnik">
+ <p:editCell>
+ <t:actionlink t:id="edit" t:zone="formZone" context="onekorisnik">Edit</t:actionlink>
+ </p:editCell>
+ <p:deleteCell>
+ <t:actionlink t:id="delete" t:zone="zoneKorisnik" context="onekorisnik.id">Delete</t:actionlink>
+ </p:deleteCell>
+ </t:grid>
+ </t:zone>
+</html>
