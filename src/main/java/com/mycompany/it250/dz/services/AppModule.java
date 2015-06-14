@@ -4,14 +4,20 @@ import com.mycompany.it250.dz.dao.GenericDao;
 import com.mycompany.it250.dz.dao.GenericDaoImpl;
 import com.mycompany.it250.dz.dao.KorisnikDao;
 import com.mycompany.it250.dz.dao.KorisnikDaoImpl;
+import com.mycompany.it250.dz.restser.SobeServiceInterface;
+import com.mycompany.it250.dz.restser.SobeWebService;
 import java.io.IOException;
 
 import org.apache.tapestry5.*;
+import org.apache.tapestry5.hibernate.HibernateTransactionAdvisor;
+import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
+import org.apache.tapestry5.ioc.MethodAdviceReceiver;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
 import org.apache.tapestry5.ioc.annotations.Local;
+import org.apache.tapestry5.ioc.annotations.Match;
 import org.apache.tapestry5.ioc.services.ApplicationDefaults;
 import org.apache.tapestry5.ioc.services.SymbolProvider;
 import org.apache.tapestry5.services.*;
@@ -30,6 +36,7 @@ public class AppModule
     {
         binder.bind(KorisnikDao.class, KorisnikDaoImpl.class);
 binder.bind(GenericDao.class,GenericDaoImpl.class);
+binder.bind(SobeServiceInterface.class, SobeWebService.class);
 
         // Make bind() calls on the binder object to define most IoC services.
         // Use service builder methods (example below) when the implementation
@@ -151,4 +158,17 @@ configuration) {
 
         configuration.add("Timing", filter);
     }
+    
+    @Match("*Sobe*")
+    public static void adviseTransactionally(
+            HibernateTransactionAdvisor advisor, MethodAdviceReceiver receiver) {
+        advisor.addTransactionCommitAdvice(receiver);
+    }
+
+    @Contribute(javax.ws.rs.core.Application.class)
+    public static void configureRestResources(Configuration<Object> singletons,
+            SobeServiceInterface sobeWeb) {
+        singletons.add(sobeWeb);
+    }
+    
 }

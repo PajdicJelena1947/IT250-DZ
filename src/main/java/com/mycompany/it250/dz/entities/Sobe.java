@@ -19,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 /**
@@ -28,6 +29,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 
 
 @Entity
+@XmlRootElement
 @Table(name = "sobe")
 @NamedQueries({
 @NamedQuery(name = "Sobe.findAll", query = "SELECT s FROM Sobe s")})
