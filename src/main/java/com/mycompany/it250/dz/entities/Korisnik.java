@@ -22,13 +22,13 @@ import org.apache.tapestry5.ioc.annotations.Inject;
  *
  * @author pc
  */
-
 @Entity
 @Table(name = "korisnik")
 @NamedQueries({
- @NamedQuery(name = "Korisnik.findAll", query = "SELECT k FROM Korisnik k")})
+    @NamedQuery(name = "Korisnik.findAll", query = "SELECT k FROM Korisnik k")})
 
-public class Korisnik extends AbstractEntity  implements Serializable {
+public class Korisnik extends AbstractEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Basic(optional = false)
@@ -46,24 +46,25 @@ public class Korisnik extends AbstractEntity  implements Serializable {
     private String password;
     @Column(name = "Email")
     private String email;
-    
+
     @Basic(optional = false)
     @Enumerated(EnumType.STRING)
     @Column(name = "rola")
     private Rola rola;
-    
-    
+    @Column(name = "FACEBOOK_ID")
+    private String facebookId;
+
     @Inject
     public Korisnik() {
     }
-    public Korisnik(Integer korisnikId,String ime,String prezime,String jmbg){
-      this.ime=ime;
-      this.prezime=prezime;
-      this.jmbg=jmbg;
-        
+
+    public Korisnik(String email, String password, Rola rola, String facebookId) {
+        this.email = email;
+        this.password = password;
+        this.rola = rola;
+        this.facebookId = facebookId;
     }
 
-   
     /**
      * @return the ime
      */
@@ -161,15 +162,19 @@ public class Korisnik extends AbstractEntity  implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    
-    
+
+    /**
+     * @return the facebookId
+     */
+    public String getFacebookId() {
+        return facebookId;
     }
-   
 
-    
-    
-    
+    /**
+     * @param facebookId the facebookId to set
+     */
+    public void setFacebookId(String facebookId) {
+        this.facebookId = facebookId;
+    }
 
-
-   
+}

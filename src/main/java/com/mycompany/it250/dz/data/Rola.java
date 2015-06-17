@@ -10,5 +10,5 @@ package com.mycompany.it250.dz.data;
  * @author pc
  */
 public enum Rola {
-    Administrator,Sluzbenik
+    Administrator,Sluzbenik,Korisnik
 }

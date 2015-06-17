@@ -1,26 +1,34 @@
 package com.mycompany.it250.dz.pages;
 
 import com.mycompany.it250.dz.dao.KorisnikDao;
+import com.mycompany.it250.dz.data.Rola;
 import com.mycompany.it250.dz.entities.Korisnik;
+import com.mycompany.it250.dz.services.FacebookService;
+import com.mycompany.it250.dz.services.FacebookServiceInformation;
+import com.restfb.DefaultFacebookClient;
+import com.restfb.FacebookClient;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import net.smartam.leeloo.common.exception.OAuthProblemException;
+import net.smartam.leeloo.common.exception.OAuthSystemException;
 import org.apache.tapestry5.alerts.AlertManager;
+import org.apache.tapestry5.annotations.ActivationRequestParameter;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.InjectPage;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
+import org.apache.tapestry5.annotations.SetupRender;
 import org.apache.tapestry5.corelib.components.BeanEditForm;
-import org.apache.tapestry5.corelib.components.Form;
-import org.apache.tapestry5.corelib.components.PasswordField;
-import org.apache.tapestry5.corelib.components.TextField;
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.slf4j.Logger;
+import org.hsqldb.rights.User;
 
 
 
-public class Login
-{
-@Inject
+
+public class Login{
+    @Inject
  private KorisnikDao userDao;
  @Property
  private Korisnik userLogin;
@@ -28,40 +36,94 @@ public class Login
  private Korisnik loggedInUser;
  @Component
  private BeanEditForm form;
+ @Inject
+ private FacebookService facebookService;
+ @SessionState
+ @Property
+ private FacebookServiceInformation facebookServiceInformation;
+ @SessionState
+ @Property
+ private FacebookServiceInformation information;
+ @Property
+ private com.restfb.types.User userfb;
+ @Property
+ @ActivationRequestParameter
+ private String code;
  Object onActivate() {
- if (loggedInUser.getEmail()!= null) {
+ if (loggedInUser.getEmail() != null) {
  return Index.class;
  }
  return null;
  }
- public String getMD5Hash(String yourString) throws NoSuchAlgorithmException {
+ public String getMD5Hash(String yourString) {
  try {
- java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
-
-
+ java.security.MessageDigest md =
+java.security.MessageDigest.getInstance("MD5");
  byte[] array = md.digest(yourString.getBytes());
  StringBuffer sb = new StringBuffer();
  for (int i = 0; i < array.length; ++i) {
- sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
+ sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,
+3));
  }
  return sb.toString();
  } catch (Exception e) {
  return "";
  }
  }
- Object onSuccess() throws NoSuchAlgorithmException {
+ Object onSuccess() {
  String password = getMD5Hash(userLogin.getPassword());
  System.out.println(password);
- Korisnik u = userDao.check(userLogin.getEmail(), password);
- if (u!=null) {
+Korisnik u = userDao.check(userLogin.getEmail(), password);
+ if (u != null) {
  loggedInUser = u;
  System.out.println("Logovan");
  return Index.class;
  } else {
  form.recordError("Uneli ste pogrešne parametre");
- System.out.println("losi parametri");
+    System.out.println("losi parametri");
  return null;
  }
  }
+ public String getFacebookAuthentificationLink() throws OAuthSystemException {
+ return facebookService.getFacebookAuthentificationLink();
+ }
+
+ @CommitAfter
+ public boolean isLoggedInFb() {
+ if (facebookServiceInformation.getAccessToken() != null) {
+ Korisnik fbuser = new Korisnik(userfb.getEmail(), " ", Rola.Korisnik,
+userfb.getId());
+ Korisnik exist = null;
+ System.out.println("proverava");
+  exist = userDao.proveriemail(userfb.getId());
+ if (exist == null) {
+ userDao.register(fbuser);
+ loggedInUser = fbuser;
+ System.out.println("registruje");
+ } else {
+ loggedInUser = exist;
+ System.out.println("postoji");
+ }
+ }
+ return facebookServiceInformation.getAccessToken() != null;
+ }
+ @SetupRender
+ public void setup() throws IOException, OAuthSystemException,
+ OAuthProblemException {
+ if (code != null) {
+ facebookService.getUserAccessToken(code,
+ information.getAccessToken());
+ }
+ code = null;
+ FacebookClient facebookClient = new
+DefaultFacebookClient(information.getAccessToken());
+ if (information.isLoggedIn()) {
+ userfb = facebookClient.fetchObject("me", com.restfb.types.User.class);
+ }
+ }
 }
+
+    
+    
+
 
