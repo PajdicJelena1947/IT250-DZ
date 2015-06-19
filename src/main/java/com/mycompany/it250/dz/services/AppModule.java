@@ -7,6 +7,8 @@ import com.mycompany.it250.dz.dao.KorisnikDaoImpl;
 import com.mycompany.it250.dz.restser.SobeServiceInterface;
 import com.mycompany.it250.dz.restser.SobeWebService;
 import java.io.IOException;
+import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.realm.Realm;
 
 import org.apache.tapestry5.*;
 import org.apache.tapestry5.hibernate.HibernateTransactionAdvisor;
@@ -16,6 +18,7 @@ import org.apache.tapestry5.ioc.MethodAdviceReceiver;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
+import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.ioc.annotations.Local;
 import org.apache.tapestry5.ioc.annotations.Match;
 import org.apache.tapestry5.ioc.services.ApplicationDefaults;
@@ -38,6 +41,8 @@ public class AppModule
 binder.bind(GenericDao.class,GenericDaoImpl.class);
 binder.bind(SobeServiceInterface.class, SobeWebService.class);
 binder.bind(FacebookService.class);
+binder.bind(AuthorizingRealm.class,UserRealm.class).withId(UserRealm.class.getSimpleName());
+
 
 
         // Make bind() calls on the binder object to define most IoC services.
@@ -172,5 +177,9 @@ configuration) {
             SobeServiceInterface sobeWeb) {
         singletons.add(sobeWeb);
     }
+    public static void contributeWebSecurityManager(Configuration<Realm> configuration,
+@InjectService("UserRealm") AuthorizingRealm userRealm) {
+configuration.add(userRealm);
+ }
     
 }

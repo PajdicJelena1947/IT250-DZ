@@ -73,4 +73,11 @@ public class KorisnikDaoImpl implements KorisnikDao {
         return (rows == 0) ? false : true;
     }
 
+    @Override
+    public boolean korisnikPostoji(String user) {
+        long rows = (Long) session.createCriteria(Korisnik.class).add(Restrictions.eq("username",
+                user)).setProjection(Projections.rowCount()).uniqueResult();
+        return (rows != 0);
+    }
+
 }

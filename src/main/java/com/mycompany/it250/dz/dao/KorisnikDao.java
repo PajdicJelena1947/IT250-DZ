@@ -28,4 +28,5 @@ public interface KorisnikDao {
     
     public boolean proveriemail (String email);
     
+    public boolean korisnikPostoji(String user);
 }

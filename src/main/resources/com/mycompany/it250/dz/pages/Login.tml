@@ -2,8 +2,9 @@
 xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
 xmlns:p="tapestry:parameter">
  <div class="row">
- <div class="span4 offset3"> 
-<t:if test="loggedInFb">
+ <div class="span4 offset3">
+
+ <t:if test="loggedInFb">
  <script>
  window.onload = function(){
  location.reload();
@@ -14,7 +15,7 @@ xmlns:p="tapestry:parameter">
 exclude="id,rola,facebookId">
  <t:errors/>
  <p:password>
- <t:label for="password/>
+ <t:label for="password"/>
 <t:passwordfield t:id="password" value="userLogin.password"/>
  </p:password>
  </t:beaneditform>

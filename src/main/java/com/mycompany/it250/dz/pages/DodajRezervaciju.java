@@ -11,6 +11,7 @@ import com.mycompany.it250.dz.entities.Rezervacija;
 import com.mycompany.it250.dz.entities.Sobe;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
@@ -18,6 +19,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
  *
  * @author pc
  */
+@RequiresRoles("Admin")
 public class DodajRezervaciju {
      @Inject
     private RezervacijeDao rezervacijaDao;

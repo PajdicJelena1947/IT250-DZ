@@ -10,6 +10,7 @@ import com.mycompany.it250.dz.entities.Korisnik;
 import com.mycompany.it250.dz.services.ProtectedPage;
 import java.util.ArrayList;
 import javax.annotation.security.RolesAllowed;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.tapestry5.annotations.PageLoaded;
 
 import org.apache.tapestry5.annotations.Property;
@@ -19,8 +20,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
  *
  * @author pc
  */
-@ProtectedPage
-@RolesAllowed(value={"Administrator"})
+@RequiresRoles("Admin")
 public class DodajKorisnika {
     
     @Property
