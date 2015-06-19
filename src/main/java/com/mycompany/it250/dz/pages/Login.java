@@ -108,7 +108,7 @@ public class Login {
         if (facebookServiceInformation.getAccessToken() != null) {
             Korisnik fbuser = new Korisnik(userfb.getEmail(), " ", Rola.Korisnik,
                     userfb.getId());
-            User exist = null;
+            Korisnik exist = null;
             System.out.println("proverava");
             exist = userDao.korisnikPostoji(userfb.getId());
             if (exist == null) {
